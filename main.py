@@ -1,32 +1,46 @@
 from langchain_groq import ChatGroq
-from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 from dotenv import load_dotenv
+import streamlit as st
 
 load_dotenv()
+
+# Page config
+st.set_page_config(page_title="Personal AI Chatbot", page_icon="🤖")
+
+st.title("🤖 Personal AI Chatbot")
 
 # Initialize model
 llm = ChatGroq(model="llama-3.1-8b-instant")
 
-# Store conversation history manually
-chat_history = [
-    SystemMessage(content="You are a helpful and friendly personal AI assistant. You remember the user and talk naturally.")
-]
+# Initialize chat history in session
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        SystemMessage(content="You are a helpful personal AI assistant.")
+    ]
 
-print("Personal AI Chatbot (type 'exit' to quit)\n")
+# Display previous messages
+for msg in st.session_state.messages:
+    if isinstance(msg, HumanMessage):
+        st.chat_message("user").write(msg.content)
+    elif isinstance(msg, AIMessage):
+        st.chat_message("assistant").write(msg.content)
 
-while True:
-    user_input = input("You: ")
+# User input
+user_input = st.chat_input("Type your message...")
 
-    if user_input.lower() == "exit":
-        break
+if user_input:
+    # Show user message
+    st.chat_message("user").write(user_input)
 
-    # Add user message to history
-    chat_history.append(HumanMessage(content=user_input))
+    # Save user message
+    st.session_state.messages.append(HumanMessage(content=user_input))
 
-    # Get response
-    response = llm.invoke(chat_history)
+    # Get AI response
+    response = llm.invoke(st.session_state.messages)
 
-    # Add AI response to history
-    chat_history.append(AIMessage(content=response.content))
+    # Show response
+    st.chat_message("assistant").write(response.content)
 
-    print("Bot:", response.content)
+    # Save AI response
+    st.session_state.messages.append(AIMessage(content=response.content))
