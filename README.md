@@ -1,70 +1,89 @@
 # Personal AI Chatbot
 
-This is a small personal chatbot I built while learning LangChain and working with Groq API.
-It runs in the terminal and can hold a conversation with you, remembering things during the session.
+This is a simple personal AI chatbot I built while learning LangChain and working with the Groq API.
+
+It started as a terminal-based chatbot, and now also includes a basic web interface using Streamlit.
 
 ## What it does
 
-* Lets you chat with an AI in the terminal
-* Remembers previous messages in the same session
-* Responds like a simple personal assistant
+* Chat with an AI assistant
+* Remembers conversation during the session
+* Works in both:
+
+  * Terminal (CLI)
+  * Web UI (Streamlit)
 
 ## Tech used
 
 * Python
 * LangChain
 * Groq API
+* Streamlit
 
 ## How to run
 
-Clone the repo:
+### 1. Clone the repo
 
 ```bash
 git clone https://github.com/your-username/Personal_Chatbot.git
 cd Personal_Chatbot
 ```
 
-Create virtual environment:
+### 2. Create virtual environment
 
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-Install dependencies:
+### 3. Install dependencies
 
 ```bash
-pip install langchain langchain-groq python-dotenv
+pip install -r requirements.txt
 ```
 
-Create a `.env` file and add your API key:
+### 4. Add API key
 
-```env
+Create a `.env` file:
+
+```
 GROQ_API_KEY=your_api_key_here
 ```
 
-Run the project:
+## Run the chatbot
+
+### ▶️ Terminal version
 
 ```bash
 python main.py
 ```
 
-Type `exit` to stop the chatbot.
+### 🌐 Web UI version
+
+```bash
+python -m streamlit run app.py
+```
+
+Then open:
+
+```
+http://localhost:8501
+```
 
 ## Notes
 
-* The chatbot memory is temporary (it resets when you stop the program)
-* `.env` is ignored for security reasons
+* Chat memory is temporary (resets when app restarts)
+* `.env` is ignored for security
+* Built mainly for learning and practice
+
+## Future plans
+
+* Save chat history permanently
+* Improve UI design
+* Deploy it online
 
 ## Why I made this
 
-Just practicing LangChain and understanding how chatbots with memory work.
-Planning to improve it further with a UI and better memory.
-
-## Next improvements
-
-* Save chat history permanently
-* Build a web interface
-* Add more intelligent responses
+I built this project to understand how modern AI chat systems work and to get hands-on experience with LangChain.
 
 If you find this useful or want to improve it, feel free to fork it.
